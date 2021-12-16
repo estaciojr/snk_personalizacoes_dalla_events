@@ -287,7 +287,7 @@ public class incluiVendedor implements EventoProgramavelJava {
         JapeSessionContext.putProperty("usuario_logado", auth.getUserID());
         JapeSessionContext.putProperty("authInfo", auth);
         //JapeSessionContext.putProperty("br.com.sankhya.cadastro.funcionarios", Boolean.TRUE);
-        JapeSessionContext.putProperty("com.aceita.cpf.funcionario.repetido",Boolean.TRUE);
+        JapeSessionContext.putProperty("com.aceita.cpf.funcionario.repetido",Boolean.FALSE);
 
     }
 }
