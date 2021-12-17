@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5e1957c-3ab2-492f-b92b-17c6135ebb67" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dalla_Eventos" beforeDir="false" afterPath="$PROJECT_DIR$/Dalla_Eventos" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dalla_Eventos/src/br/com/dalla/hrc/events/validaPromo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Dalla_Eventos/src/br/com/dalla/hrc/events/validaPromo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -11,6 +13,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Dalla_Eventos" />
+    <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -43,7 +46,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639748250111</updated>
-      <workItem from="1639748252320" duration="2541000" />
+      <workItem from="1639748252320" duration="4324000" />
     </task>
     <task id="LOCAL-00001" summary="primeiro comiit">
       <created>1639750130281</created>
