@@ -3,6 +3,8 @@ package br.com.dalla.hrc.events;
 import br.com.sankhya.extensions.eventoprogramavel.EventoProgramavelJava;
 import br.com.sankhya.jape.event.PersistenceEvent;
 import br.com.sankhya.jape.event.TransactionContext;
+import br.com.sankhya.jape.vo.DynamicVO;
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers;
 
 public class getPropertyFunc implements EventoProgramavelJava {
     @Override
@@ -12,7 +14,7 @@ public class getPropertyFunc implements EventoProgramavelJava {
 
     @Override
     public void beforeUpdate(PersistenceEvent evet) throws Exception {
-
+        getPropertyFunc(evet);
     }
 
     @Override
@@ -41,6 +43,6 @@ public class getPropertyFunc implements EventoProgramavelJava {
     }
 
     private void getPropertyFunc(PersistenceEvent evet) throws Exception {
-
+        DynamicVO testVO = (DynamicVO) evet.getVo();
     }
 }
