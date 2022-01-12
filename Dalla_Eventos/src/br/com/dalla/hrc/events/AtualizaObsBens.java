@@ -2,6 +2,7 @@ package br.com.dalla.hrc.events;
 
 import br.com.sankhya.extensions.eventoprogramavel.EventoProgramavelJava;
 import br.com.sankhya.jape.EntityFacade;
+import br.com.sankhya.jape.PersistenceException;
 import br.com.sankhya.jape.bmp.PersistentLocalEntity;
 import br.com.sankhya.jape.event.PersistenceEvent;
 import br.com.sankhya.jape.event.TransactionContext;
@@ -52,24 +53,26 @@ public class AtualizaObsBens implements EventoProgramavelJava {
         BigDecimal nuNota = iBensVO.asBigDecimal("NUNOTA");
         BigDecimal sequencia = iBensVO.asBigDecimal("SEQUENCIA");
         BigDecimal codProd = iBensVO.asBigDecimal("CODPROD");
-        BigDecimal codBem = iBensVO.asBigDecimal("CODBEM");
-        String atualBem = iBensVO.asString("ATUALBEM");
+        String codBem = iBensVO.asString("CODBEM");
+       // String atualBem = iBensVO.asString("ATUALBEM");
 
         EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
-        DynamicVO bensVO = (DynamicVO) dwfFacade.findEntityByPrimaryKeyAsVO("Imobilizado", codBem);
+        DynamicVO bensVO = (DynamicVO) dwfFacade.findEntityByPrimaryKeyAsVO("Imobilizado", new Object[]{codBem , codProd});
         String nomeBem = bensVO.asString("DESCRABREV");
 
-        if (atualBem.equals("B")) {
-            PersistentLocalEntity LocalEntity = dwfFacade.findEntityByPrimaryKey("ItemNota", new Object[]{nuNota , sequencia});
-            EntityVO NVO = LocalEntity.getValueObject();
-            DynamicVO iteVO = (DynamicVO) NVO;
+        PersistentLocalEntity LocalEntity = dwfFacade.findEntityByPrimaryKey("ItemNota", new Object[]{nuNota , sequencia});
+        EntityVO NVO = LocalEntity.getValueObject();
+        DynamicVO iteVO = (DynamicVO) NVO;
 
             iteVO.setProperty("OBSERVACAO", nomeBem);
             LocalEntity.setValueObject(NVO);
-        }
 
 
 
+    }
+
+    private void exibirErro(String mensagem) throws Exception  {
+        throw new PersistenceException("<p align=\"center\"><img src=\"https://dallabernardina.vteximg.com.br/arquivos/logo_header.png\" height=\"100\" width=\"300\"></img></p><br/><br/><br/><br/><br/><br/>\n\n\n\n<font size=\"15\" color=\"#BF2C2C\"><b> " + mensagem + "</b></font>\n\n\n");
     }
 
 }
