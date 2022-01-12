@@ -129,7 +129,7 @@ public class validaPromo implements EventoProgramavelJava {
             }
             if (resultado !=null) {
 
-                    LiberacaoAlcadaHelper.inserirSolicitacao();
+                   // LiberacaoAlcadaHelper.inserirSolicitacao();
 
                 if (resultado.intValue() > 0 && vlrDesc.doubleValue() > 0 && percDesc.doubleValue() > 0 && validaTopComercial.equals("S")) {
                     exibirErro("Produto está na tabela de promoção: " + resultado + "\nNão é possível dar desconto em um produto em promoção!");

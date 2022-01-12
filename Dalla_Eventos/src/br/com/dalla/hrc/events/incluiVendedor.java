@@ -120,7 +120,7 @@ public class incluiVendedor implements EventoProgramavelJava {
     }
 
     private void incluirFuncionario(PersistenceEvent event) throws Exception {
-        this.setupContext();
+
 
         DynamicVO rpaVO = (DynamicVO) event.getVo();
 
@@ -152,6 +152,7 @@ public class incluiVendedor implements EventoProgramavelJava {
         EntityVO funcVO = dwfFacadeF.getDefaultValueObjectInstance(DynamicEntityNames.FUNCIONARIO);
         DynamicVO newfuncVO = (DynamicVO) funcVO;
 
+        this.setupContext();
 
         newfuncVO.setProperty("CODEMP", getCodEmpUsuLogado());
         newfuncVO.setProperty("CODFUNC", getCodFuncionario());
