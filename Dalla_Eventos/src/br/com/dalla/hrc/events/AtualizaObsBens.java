@@ -8,6 +8,7 @@ import br.com.sankhya.jape.event.PersistenceEvent;
 import br.com.sankhya.jape.event.TransactionContext;
 import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.jape.vo.EntityVO;
+import br.com.sankhya.modelcore.comercial.ImportacaoXmlNotaCompraHelper;
 import br.com.sankhya.modelcore.util.EntityFacadeFactory;
 
 import java.math.BigDecimal;
@@ -64,8 +65,8 @@ public class AtualizaObsBens implements EventoProgramavelJava {
         EntityVO NVO = LocalEntity.getValueObject();
         DynamicVO iteVO = (DynamicVO) NVO;
 
-            iteVO.setProperty("OBSERVACAO", nomeBem);
-            LocalEntity.setValueObject(NVO);
+        iteVO.setProperty("OBSERVACAO", nomeBem);
+        LocalEntity.setValueObject(NVO);
 
 
 
