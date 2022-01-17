@@ -68,7 +68,7 @@ public class AtualizaObsBens implements EventoProgramavelJava {
         iteVO.setProperty("OBSERVACAO", nomeBem);
         LocalEntity.setValueObject(NVO);
 
-
+        
 
     }
 
