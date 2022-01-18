@@ -23,7 +23,7 @@ public class IncluirNotasColetas implements EventoProgramavelJava {
 
     @Override
     public void beforeUpdate(PersistenceEvent event) throws Exception {
-        incluirNotasColetas(event);
+
     }
 
     @Override
@@ -58,8 +58,8 @@ public class IncluirNotasColetas implements EventoProgramavelJava {
         BigDecimal codtipoper = (BigDecimal) cabVO.getProperty("CODTIPOPER");
         BigDecimal codTransportadora = cabVO.asBigDecimal("CODPARCTRANSP");
         BigDecimal codParc = cabVO.asBigDecimal("CODPARC");
-        Double vlrNota = cabVO.asDouble("VLRNOTA");
-        Double vlrFrete = cabVO.asDouble("VLRFRETE");
+        BigDecimal vlrNota = cabVO.asBigDecimal("VLRNOTA");
+        BigDecimal vlrFrete = cabVO.asBigDecimal("VLRFRETE");
         String nuPedidoVtex = (String) cabVO.getProperty("AD_PEDIDOECOM");
         String statusNfe = (String) cabVO.getProperty("STATUSNFE");
 
@@ -67,42 +67,28 @@ public class IncluirNotasColetas implements EventoProgramavelJava {
 
 
 
-        if (codEmp.intValue() == 9 && codtipoper.intValue() == 1108 && nuPedidoVtex != null && statusNfe.equals("A")) {
+        if (codEmp.intValue() == 9 && codtipoper.intValue() == 1108 && nuPedidoVtex != null && statusNfe != null)  {
 
-            EntityVO colVO = dwfFacade.getDefaultValueObjectInstance("AD_TDHCOL");
-            DynamicVO newColVO = (DynamicVO) colVO;
+            if (statusNfe.equals("A")) {
+                EntityVO colVO = dwfFacade.getDefaultValueObjectInstance("AD_TDHCOL");
+                DynamicVO newColVO = (DynamicVO) colVO;
 
-            newColVO.setProperty("NUNOTA", nuNota);
-            newColVO.setProperty("NUMNOTA", numNota);
-            newColVO.setProperty("CODPARCTRANSP", codTransportadora);
-            newColVO.setProperty("CODPARC", codParc);
-            newColVO.setProperty("VLRNOTA", vlrNota);
-            newColVO.setProperty("VLRFRETE", vlrFrete);
+                //exibirErro("chegamos aqui " + nuNota);
 
-            dwfFacade.createEntity(DynamicEntityNames.VENDEDOR, (EntityVO) newColVO);
+                newColVO.setProperty("NUNOTA", nuNota);
+                newColVO.setProperty("NUMNOTA", numNota);
+                newColVO.setProperty("CODPARCTRANSP", codTransportadora);
+                newColVO.setProperty("CODPARC", codParc);
+                newColVO.setProperty("VLRNOTA", vlrNota);
+                newColVO.setProperty("VLRFRETE", vlrFrete);
+                newColVO.setProperty("COLETAR", "N");
+                newColVO.setProperty("MOTORISTA", null);
 
+                dwfFacade.createEntity("AD_TDHCOL", (EntityVO) newColVO);
+            }
         }
     }
 
-    private BigDecimal getUltimoNucoleta() throws Exception {
-
-        BigDecimal nuColeta = new java.math.BigDecimal(0);
-
-        JdbcWrapper jdbcV = null;
-        EntityFacade dwfFacadeV = EntityFacadeFactory.getDWFFacade();
-        jdbcV = dwfFacadeV.getJdbcWrapper();
-
-        NativeSql sql = new NativeSql(jdbcV);
-        sql.resetSqlBuf();
-        sql.appendSql("SELECT MAX(NUCOLETA)+1 AS NUCOLETA FROM AD_TDHCOL");
-        ResultSet query = sql.executeQuery();
-        while (query.next()) {
-            nuColeta = query.getBigDecimal("NUCOLETA");
-        }
-        return nuColeta;
-
-
-    }
 
     private void exibirErro(String mensagem) throws Exception  {
         throw new PersistenceException("<p align=\"center\"><img src=\"https://dallabernardina.vteximg.com.br/arquivos/logo_header.png\" height=\"100\" width=\"300\"></img></p><br/><br/><br/><br/><br/><br/>\n\n\n\n<font size=\"15\" color=\"#BF2C2C\"><b> " + mensagem + "</b></font>\n\n\n");
