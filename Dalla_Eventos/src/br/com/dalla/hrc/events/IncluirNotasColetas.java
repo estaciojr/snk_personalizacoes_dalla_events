@@ -14,6 +14,8 @@ import br.com.sankhya.modelcore.util.EntityFacadeFactory;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class IncluirNotasColetas implements EventoProgramavelJava {
     @Override
@@ -54,8 +56,8 @@ public class IncluirNotasColetas implements EventoProgramavelJava {
         DynamicVO cabVO = (DynamicVO) event.getVo();
         BigDecimal nuNota = cabVO.asBigDecimal("NUNOTA");
         BigDecimal numNota = cabVO.asBigDecimal("NUMNOTA");
-        BigDecimal codEmp = (BigDecimal) cabVO.getProperty("CODEMP");
-        BigDecimal codtipoper = (BigDecimal) cabVO.getProperty("CODTIPOPER");
+        int codEmp = cabVO.asInt("CODEMP");
+        int codtipoper = cabVO.asInt("CODTIPOPER");
         BigDecimal codTransportadora = cabVO.asBigDecimal("CODPARCTRANSP");
         BigDecimal codParc = cabVO.asBigDecimal("CODPARC");
         BigDecimal vlrNota = cabVO.asBigDecimal("VLRNOTA");
@@ -66,8 +68,10 @@ public class IncluirNotasColetas implements EventoProgramavelJava {
         EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
 
 
+        ArrayList<Integer> listaEmpresas = new ArrayList<>(Arrays.asList(2,9,12));
+        ArrayList<Integer> listaTops= new ArrayList<>(Arrays.asList(1108,1154));
 
-        if (codEmp.intValue() == 9 && codtipoper.intValue() == 1108 && nuPedidoVtex != null && statusNfe != null)  {
+        if (listaEmpresas.contains(codEmp) && listaTops.contains(codtipoper)&& statusNfe != null)  {
 
             if (statusNfe.equals("A")) {
                 EntityVO colVO = dwfFacade.getDefaultValueObjectInstance("AD_TDHCOL");
