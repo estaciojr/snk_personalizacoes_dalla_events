@@ -3,19 +3,21 @@ package br.com.dalla.hrc.events;
 import br.com.sankhya.extensions.eventoprogramavel.EventoProgramavelJava;
 import br.com.sankhya.jape.EntityFacade;
 import br.com.sankhya.jape.PersistenceException;
+import br.com.sankhya.jape.bmp.PersistentLocalEntity;
 import br.com.sankhya.jape.dao.JdbcWrapper;
 import br.com.sankhya.jape.event.PersistenceEvent;
 import br.com.sankhya.jape.event.TransactionContext;
 import br.com.sankhya.jape.sql.NativeSql;
+import br.com.sankhya.jape.util.FinderWrapper;
 import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.jape.vo.EntityVO;
-import br.com.sankhya.modelcore.util.DynamicEntityNames;
+import br.com.sankhya.modelcore.dwfdata.vo.ItemNotaVO;
 import br.com.sankhya.modelcore.util.EntityFacadeFactory;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.sql.Timestamp;
+import java.util.*;
 
 public class IncluirNotasColetas implements EventoProgramavelJava {
     @Override
@@ -40,6 +42,8 @@ public class IncluirNotasColetas implements EventoProgramavelJava {
 
     @Override
     public void afterUpdate(PersistenceEvent event) throws Exception {
+
+
         incluirNotasColetas(event);
     }
 
@@ -56,42 +60,59 @@ public class IncluirNotasColetas implements EventoProgramavelJava {
         DynamicVO cabVO = (DynamicVO) event.getVo();
         BigDecimal nuNota = cabVO.asBigDecimal("NUNOTA");
         BigDecimal numNota = cabVO.asBigDecimal("NUMNOTA");
-        int codEmp = cabVO.asInt("CODEMP");
-        int codtipoper = cabVO.asInt("CODTIPOPER");
+        BigDecimal codEmp = cabVO.asBigDecimal("CODEMP");
+        BigDecimal codtipoper = cabVO.asBigDecimal("CODTIPOPER");
+        Timestamp dtNeg = cabVO.asTimestamp("DTNEG");
         BigDecimal codTransportadora = cabVO.asBigDecimal("CODPARCTRANSP");
         BigDecimal codParc = cabVO.asBigDecimal("CODPARC");
         BigDecimal vlrNota = cabVO.asBigDecimal("VLRNOTA");
         BigDecimal vlrFrete = cabVO.asBigDecimal("VLRFRETE");
-        String nuPedidoVtex = (String) cabVO.getProperty("AD_PEDIDOECOM");
         String statusNfe = (String) cabVO.getProperty("STATUSNFE");
 
+
         EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
+        JdbcWrapper jdbc = dwfFacade.getJdbcWrapper();
 
+        NativeSql sql = new NativeSql(jdbc);
+        sql.setReuseStatements(true);
+        sql.setNamedParameter("NUNOTA",nuNota );
+        sql.appendSql(" SELECT ");
+        sql.appendSql(" COUNT(1) AS QTD ,AD_CODEMPDEST AS CODEMPDEST");
+        sql.appendSql(" FROM TGFITE ITE ");
+        sql.appendSql(" WHERE NUNOTA = :NUNOTA");
+        sql.appendSql(" GROUP BY AD_CODEMPDEST");
+        sql.appendSql(" HAVING count(1) > 0");
 
-        ArrayList<Integer> listaEmpresas = new ArrayList<>(Arrays.asList(2,9,12));
-        ArrayList<Integer> listaTops= new ArrayList<>(Arrays.asList(1108,1154));
+        ResultSet rset = sql.executeQuery();
+        while (rset.next()) {
+            BigDecimal codempdest = rset.getBigDecimal("CODEMPDEST");
 
-        if (listaEmpresas.contains(codEmp) && listaTops.contains(codtipoper)&& statusNfe != null)  {
+            ArrayList<BigDecimal> listaEmpresas = new ArrayList<>(Arrays.asList(new BigDecimal(2),new BigDecimal(9),new BigDecimal(12)));
+            ArrayList<BigDecimal> listaTops = new ArrayList<>(Arrays.asList(new BigDecimal(1108),new BigDecimal(1154)));
 
-            if (statusNfe.equals("A")) {
-                EntityVO colVO = dwfFacade.getDefaultValueObjectInstance("AD_TDHCOL");
-                DynamicVO newColVO = (DynamicVO) colVO;
+            if (listaEmpresas.contains(codEmp) && listaTops.contains(codtipoper)&& statusNfe != null)  {
 
-                //exibirErro("chegamos aqui " + nuNota);
+                if (statusNfe.equals("A")) {
+                    EntityVO colVO = dwfFacade.getDefaultValueObjectInstance("AD_TDHCOL");
+                    DynamicVO newColVO = (DynamicVO) colVO;
 
-                newColVO.setProperty("NUNOTA", nuNota);
-                newColVO.setProperty("NUMNOTA", numNota);
-                newColVO.setProperty("CODPARCTRANSP", codTransportadora);
-                newColVO.setProperty("CODPARC", codParc);
-                newColVO.setProperty("VLRNOTA", vlrNota);
-                newColVO.setProperty("VLRFRETE", vlrFrete);
-                newColVO.setProperty("COLETAR", "N");
-                newColVO.setProperty("MOTORISTA", null);
-
-                dwfFacade.createEntity("AD_TDHCOL", (EntityVO) newColVO);
+                    newColVO.setProperty("NUNOTA", nuNota);
+                    newColVO.setProperty("NUMNOTA", numNota);
+                    newColVO.setProperty("CODPARCTRANSP", codTransportadora);
+                    newColVO.setProperty("CODPARC", codParc);
+                    newColVO.setProperty("VLRNOTA", vlrNota);
+                    newColVO.setProperty("VLRFRETE", vlrFrete);
+                    newColVO.setProperty("CODEMP", codempdest);
+                    newColVO.setProperty("DTNEG", dtNeg);
+                    newColVO.setProperty("COLETAR", "A");
+                    //newColVO.setProperty("MOTORISTA", null);
+                    dwfFacade.createEntity("AD_TDHCOL", (EntityVO) newColVO);
+                }
             }
         }
     }
+
+
 
 
     private void exibirErro(String mensagem) throws Exception  {
