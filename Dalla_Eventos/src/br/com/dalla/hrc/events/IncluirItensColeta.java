@@ -4,16 +4,19 @@ import br.com.sankhya.extensions.eventoprogramavel.EventoProgramavelJava;
 import br.com.sankhya.jape.EntityFacade;
 import br.com.sankhya.jape.PersistenceException;
 import br.com.sankhya.jape.bmp.PersistentLocalEntity;
+import br.com.sankhya.jape.dao.EntityDAO;
 import br.com.sankhya.jape.dao.EntityPrimaryKey;
 import br.com.sankhya.jape.event.PersistenceEvent;
 import br.com.sankhya.jape.event.TransactionContext;
 import br.com.sankhya.jape.util.FinderWrapper;
 import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.jape.vo.EntityVO;
+import br.com.sankhya.jape.wrapper.JapeWrapper;
 import br.com.sankhya.modelcore.dwfdata.vo.ItemNotaVO;
 import br.com.sankhya.modelcore.util.EntityFacadeFactory;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -40,7 +43,7 @@ public class IncluirItensColeta implements EventoProgramavelJava {
 
     @Override
     public void afterUpdate(PersistenceEvent event) throws Exception {
-        IncluirItensColeta(event);
+       // IncluirItensColeta(event);
     }
 
     @Override
@@ -50,44 +53,53 @@ public class IncluirItensColeta implements EventoProgramavelJava {
 
     @Override
     public void beforeCommit(TransactionContext ctx) throws Exception {
-
+        IncluirItensColeta(ctx);
     }
     private void IncluirItensColeta(TransactionContext ctx) throws Exception {
-        Collection<?> colVO = ctx.getInserted();
+        Collection<?> itens = ctx.getInserted();
+        Iterator<?> itecol = itens.iterator();
+        while(itecol.hasNext()) {
+            if(!itens.isEmpty()){
+                EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
+
+                PersistentLocalEntity iteEntity = (PersistentLocalEntity) itecol.next();
+                EntityVO NVO = iteEntity.getValueObject();
+                DynamicVO colVO = (DynamicVO) NVO;
+                BigDecimal nuNota = colVO.asBigDecimal("NUNOTA");
 
 
-        //exibirErro("chegamos aqui" + nuNota);
+                Collection<?> iteCompraEncomenda = EntityFacadeFactory.getDWFFacade().findByDynamicFinder(new FinderWrapper("ItemNota", "this.NUNOTA = ? and this.SEQUENCIA>0 ", new Object[]{nuNota}));
+                Iterator<?> itepro = iteCompraEncomenda.iterator();
+                while(itepro.hasNext()) {
+                    if (!iteCompraEncomenda.isEmpty()) {
+                        PersistentLocalEntity iteEncomendaEntity = (PersistentLocalEntity) itepro.next();
+                        ItemNotaVO iteproEncomendaVO = (ItemNotaVO) ((DynamicVO) iteEncomendaEntity.getValueObject()).wrapInterface(ItemNotaVO.class);
+                        BigDecimal qtdneg = iteproEncomendaVO.getQTDNEG();
+                        BigDecimal vlrunit = iteproEncomendaVO.getVLRUNIT();
+                        BigDecimal vlrtot = iteproEncomendaVO.getVLRTOT();
+                        BigDecimal codProd = iteproEncomendaVO.getCODPROD();
+                        BigDecimal sequencia = iteproEncomendaVO.getSEQUENCIA();
+                        String lote = iteproEncomendaVO.getCONTROLE();
+                        String codvol = iteproEncomendaVO.getCODVOL();
 
-        EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
-        Collection<?> iteCompraEncomenda = EntityFacadeFactory.getDWFFacade().findByDynamicFinder(new FinderWrapper("ItemNota", "this.NUNOTA = ? and this.SEQUENCIA>0 ", new Object[]{nuNota}));
-        Iterator<?> itepro = iteCompraEncomenda.iterator();
-        while(itepro.hasNext()) {
-            if (!iteCompraEncomenda.isEmpty()) {
-                PersistentLocalEntity iteEncomendaEntity = (PersistentLocalEntity)itepro.next();
-                ItemNotaVO iteproEncomendaVO = (ItemNotaVO)((DynamicVO)iteEncomendaEntity.getValueObject()).wrapInterface(ItemNotaVO.class);
-                BigDecimal qtdneg = iteproEncomendaVO.getQTDNEG();
-                BigDecimal  vlrunit = iteproEncomendaVO.getVLRUNIT();
-                BigDecimal vlrtot = iteproEncomendaVO.getVLRTOT();
-                BigDecimal codProd =iteproEncomendaVO.getCODPROD();
-                BigDecimal sequencia = iteproEncomendaVO.getSEQUENCIA();
-                String lote = iteproEncomendaVO.getCONTROLE();
-                String codvol = iteproEncomendaVO.getCODVOL();
+                        exibirErro("chegamos aqui" + sequencia);
 
-                exibirErro("chegamos aqui" + sequencia);
-
-                EntityVO itensVO = dwfFacade.getDefaultValueObjectInstance("AD_TDHICO");
-                DynamicVO newItensVO = (DynamicVO)itensVO;
-                newItensVO.setProperty("SEQITECOL",sequencia);
-                newItensVO.setProperty("QTDNEG",qtdneg);
-                newItensVO.setProperty("VLRUNIT",vlrunit);
-                newItensVO.setProperty("VLRTOT",vlrtot);
-                newItensVO.setProperty("CODPROD",codProd);
-                newItensVO.setProperty("CONTROLE",lote);
-                newItensVO.setProperty("CODVOL",codvol);
-                dwfFacade.createEntity("AD_TDHICO",(EntityVO) newItensVO);
+                        EntityVO itensVO = dwfFacade.getDefaultValueObjectInstance("AD_TDHICO");
+                        DynamicVO newItensVO = (DynamicVO) itensVO;
+                        newItensVO.setProperty("SEQITECOL", sequencia);
+                        newItensVO.setProperty("QTDNEG", qtdneg);
+                        newItensVO.setProperty("VLRUNIT", vlrunit);
+                        newItensVO.setProperty("VLRTOT", vlrtot);
+                        newItensVO.setProperty("CODPROD", codProd);
+                        newItensVO.setProperty("CONTROLE", lote);
+                        newItensVO.setProperty("CODVOL", codvol);
+                        dwfFacade.createEntity("AD_TDHICO", (EntityVO) newItensVO);
+                    }
+                }
             }
         }
     }
+
 
 
     private void exibirErro(String mensagem) throws Exception  {
