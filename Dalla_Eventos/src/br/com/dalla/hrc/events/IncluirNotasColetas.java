@@ -11,7 +11,8 @@ import br.com.sankhya.jape.sql.NativeSql;
 import br.com.sankhya.jape.util.FinderWrapper;
 import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.jape.vo.EntityVO;
-import br.com.sankhya.jape.vo.PrePersistEntityState;
+import br.com.sankhya.jape.wrapper.JapeFactory;
+import br.com.sankhya.jape.wrapper.JapeWrapper;
 import br.com.sankhya.modelcore.dwfdata.vo.ItemNotaVO;
 import br.com.sankhya.modelcore.util.EntityFacadeFactory;
 
@@ -43,9 +44,8 @@ public class IncluirNotasColetas implements EventoProgramavelJava {
 
     @Override
     public void afterUpdate(PersistenceEvent event) throws Exception {
-
-
         incluirNotasColetas(event);
+       //IncluirItensColeta(event);
     }
 
     @Override
@@ -69,8 +69,7 @@ public class IncluirNotasColetas implements EventoProgramavelJava {
         BigDecimal vlrNota = cabVO.asBigDecimal("VLRNOTA");
         BigDecimal vlrFrete = cabVO.asBigDecimal("VLRFRETE");
         String statusNfe = (String) cabVO.getProperty("STATUSNFE");
-
-
+        
         EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
         JdbcWrapper jdbc = dwfFacade.getJdbcWrapper();
 
@@ -105,15 +104,11 @@ public class IncluirNotasColetas implements EventoProgramavelJava {
                     newColVO.setProperty("VLRFRETE", vlrFrete);
                     newColVO.setProperty("CODEMP", codempdest);
                     newColVO.setProperty("DTNEG", dtNeg);
-                    newColVO.setProperty("COLETAR", "A");
-                    //newColVO.setProperty("MOTORISTA", null);
                     dwfFacade.createEntity("AD_TDHCOL", (EntityVO) newColVO);
                 }
             }
         }
     }
-
-
 
 
     private void exibirErro(String mensagem) throws Exception  {
