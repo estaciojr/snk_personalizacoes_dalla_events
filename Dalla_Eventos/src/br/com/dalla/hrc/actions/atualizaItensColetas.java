@@ -5,21 +5,35 @@ import br.com.sankhya.extensions.actionbutton.ContextoAcao;
 import br.com.sankhya.extensions.actionbutton.Registro;
 import br.com.sankhya.jape.PersistenceException;
 
+import java.math.BigDecimal;
+import java.util.Locale;
+
 public class atualizaItensColetas implements AcaoRotinaJava {
 
 
     @Override
     public void doAction(ContextoAcao ctx) throws Exception {
-
         Registro [] linha = ctx.getLinhas();
+
 
         if( linha.length == 0 ) {
             this.exibirErro("Selecione ao menos uma Linha");
         }
 
-        String status = (String) ctx.getParam("STATUS");
 
-        this.exibirErro("retonar minha variavel" + status);
+            for(Registro linhas:linha) {
+                String status = (String) linhas.getCampo("STATUS");
+                if (status.equals("A")) {
+                    linhas.setCampo("STATUS", "C");
+                    String msg;
+                    ctx.setMensagemRetorno("Processo Concluido!");
+            }
+        }
+
+
+        //String lote = (String) linha[0].getCampo("CONTROLE");
+
+        //this.exibirErro("retonar minha variavel " + status + " " + lote);
 
 
 
