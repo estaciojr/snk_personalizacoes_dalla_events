@@ -1,5 +1,6 @@
 package br.com.dalla.hrc.actions;
 
+import br.com.dalla.hrc.utils.exibirErro;
 import br.com.sankhya.extensions.actionbutton.AcaoRotinaJava;
 import br.com.sankhya.extensions.actionbutton.ContextoAcao;
 import br.com.sankhya.extensions.actionbutton.Registro;
@@ -30,7 +31,9 @@ public class atualizaItensColetas implements AcaoRotinaJava {
             }
         }
 
+        exibirErro erro = new exibirErro();
 
+            erro.exibeErroDalla("sua mensagem aqui");
         //String lote = (String) linha[0].getCampo("CONTROLE");
 
         //this.exibirErro("retonar minha variavel " + status + " " + lote);
