@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b5e1957c-3ab2-492f-b92b-17c6135ebb67" name="Changes" comment="">
+    <list default="true" id="b5e1957c-3ab2-492f-b92b-17c6135ebb67" name="Changes" comment="inclusão da Classe marcarComoPendente">
+      <change afterPath="$PROJECT_DIR$/EventDallaHomeCenter/EventDallaHomeCenter.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dalla_Eventos" beforeDir="false" afterPath="$PROJECT_DIR$/Dalla_Eventos" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dalla_Eventos/src/br/com/dalla/hrc/events/validaPromo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Dalla_Eventos/src/br/com/dalla/hrc/events/validaPromo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dalla_Eventos/src/br/com/dalla/hrc/actions/atualizaItensColetas.java" beforeDir="false" afterPath="$PROJECT_DIR$/Dalla_Eventos/src/br/com/dalla/hrc/actions/atualizaItensColetas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dalla_Eventos/src/br/com/dalla/hrc/utils/exibirErro.java" beforeDir="false" afterPath="$PROJECT_DIR$/Dalla_Eventos/src/br/com/dalla/hrc/utils/exibirErro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Dalla_Eventos_jar/Dalla_Eventos.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Dalla_Eventos_jar/Dalla_Eventos.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="HTTP Request" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Dalla_Eventos" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="556d1415-6b10-46cc-80c2-2624d91679c2" />
+        <option name="url" value="git@github.com:estaciojr/snk_personalizacoes_dalla_events.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -31,12 +53,22 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Dalla_Eventos/Events_jar" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Dalla_Eventos/src/br/com/dalla/hrc/actions/atualizaItensColetas.java" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RunManager">
+    <configuration name="All in teste" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/Dalla_Eventos/src/teste.http">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.All in teste" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -46,7 +78,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639748250111</updated>
-      <workItem from="1639748252320" duration="4324000" />
+      <workItem from="1639748252320" duration="5037000" />
+      <workItem from="1639753715175" duration="1351000" />
+      <workItem from="1642388406770" duration="1198000" />
+      <workItem from="1642859715093" duration="616000" />
+      <workItem from="1642860392432" duration="4965000" />
+      <workItem from="1645491836132" duration="38000" />
+      <workItem from="1646616443066" duration="38000" />
+      <workItem from="1646616531245" duration="91000" />
+      <workItem from="1646623965884" duration="6310000" />
+      <workItem from="1646694261239" duration="963000" />
     </task>
     <task id="LOCAL-00001" summary="primeiro comiit">
       <created>1639750130281</created>
@@ -55,7 +96,21 @@
       <option name="project" value="LOCAL" />
       <updated>1639750130281</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="COmitando testes sobre TransactionContext(ctx);">
+      <created>1642866229052</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1642866229052</updated>
+    </task>
+    <task id="LOCAL-00003" summary="inclusão da Classe marcarComoPendente">
+      <created>1646674695884</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1646674695884</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -74,7 +129,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="primeiro comiit" />
-    <option name="LAST_COMMIT_MESSAGE" value="primeiro comiit" />
+    <MESSAGE value="COmitando testes sobre TransactionContext(ctx);" />
+    <MESSAGE value="inclusão da Classe marcarComoPendente" />
+    <option name="LAST_COMMIT_MESSAGE" value="inclusão da Classe marcarComoPendente" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

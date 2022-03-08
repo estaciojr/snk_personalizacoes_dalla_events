@@ -1,36 +1,28 @@
 package br.com.dalla.hrc.actions;
 
-import br.com.dalla.hrc.utils.exibirErro;
 import br.com.sankhya.extensions.actionbutton.AcaoRotinaJava;
 import br.com.sankhya.extensions.actionbutton.ContextoAcao;
 import br.com.sankhya.extensions.actionbutton.Registro;
 import br.com.sankhya.jape.PersistenceException;
 
-import java.math.BigDecimal;
-import java.util.Locale;
-
-public class atualizaItensColetas implements AcaoRotinaJava {
-
-
+public class marcarComoPendente implements AcaoRotinaJava {
     @Override
     public void doAction(ContextoAcao ctx) throws Exception {
-        Registro [] linha = ctx.getLinhas();
+        Registro []  linha = ctx.getLinhas();
 
-
-        if( linha.length == 0 ) {
-            this.exibirErro("Selecione ao menos uma Linha");
+        if (linha.length == 0) {
+            this.exibirErro("Selecione ao menos uma linha");
         }
 
+        for (Registro linhas : linha ) {
 
-
-
-
-        exibirErro erro = new exibirErro();
-
-            erro.exibeErroDalla("sua mensagem aqui");
-        //String lote = (String) linha[0].getCampo("CONTROLE");
-
-        //this.exibirErro("retonar minha variavel " + status + " " + lote);
+            String pendente = (String) linhas.getCampo("PENDENTE");
+            if (pendente.equals("N")) {
+                linhas.setCampo("PENDENTE", "S");
+            } else {
+                this.exibirErro("Iten(s) estão pendente, Selecione um iten(s) não pendente!");
+            }
+        }
 
 
 
