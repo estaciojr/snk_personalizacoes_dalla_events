@@ -21,14 +21,8 @@ public class atualizaItensColetas implements AcaoRotinaJava {
         }
 
 
-            for(Registro linhas:linha) {
-                String status = (String) linhas.getCampo("STATUS");
-                if (status.equals("A")) {
-                    linhas.setCampo("STATUS", "C");
-                    String msg;
-                    ctx.setMensagemRetorno("Processo Concluido!");
-            }
-        }
+
+
 
 
         //String lote = (String) linha[0].getCampo("CONTROLE");

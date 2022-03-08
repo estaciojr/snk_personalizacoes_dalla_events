@@ -76,9 +76,8 @@ public class trocaOpcEntregaEmpDestEmpEstEcom implements EventoProgramavelJava {
                 if(!vtxProdsVO.isEmpty()) {
 
                     for (DynamicVO newVtxProdsVO : vtxProdsVO) {
-                        //BigDecimal prodIdVtx =  newVtxProdsVO.asBigDecimal("PRODUCTID");
+
                         String  warehouseid = newVtxProdsVO.asString("WAREHOUSEID");
-                        //Double qtd = newVtxProdsVO.asDouble("QUANTITY");
                         String nuPedido = newVtxProdsVO.asString("PEDIDO");
 
 
