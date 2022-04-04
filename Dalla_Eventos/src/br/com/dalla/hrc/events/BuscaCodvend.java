@@ -74,8 +74,12 @@ public class BuscaCodvend implements EventoProgramavelJava {
                 codVendVtex = new String("DAL");
             }
 
-            if (codVendVtex.equals("PRS") || codVendVtex.equals("PRB") || codVendVtex.equals("PTR") ){
+            if (codVendVtex.equals("PRS") || codVendVtex.equals("PTR") ){
                 codVendVtex = new String("PTR");
+            }
+
+            if (codVendVtex.equals("BWW") || codVendVtex.equals("PRB") ){
+                codVendVtex = new String("PRB");
             }
 
             JapeWrapper DAO = JapeFactory.dao("Vendedor");
